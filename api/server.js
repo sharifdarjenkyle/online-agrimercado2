@@ -27,7 +27,8 @@ connection.connect((err) => {
 app.get('/api/status', (req, res) => {
     connection.query('SELECT 1 + 1 AS solution', (error, results) => {
         if (error) {
-            return res.status(500).json({ message: 'Error checking database connection' });
+            console.error('Query error:', error); // Log the error to help debug
+            return res.status(500).json({ message: 'Error checking database connection', error: error.message });
         }
         res.json({ message: 'Database connection is active', solution: results[0].solution });
     });
